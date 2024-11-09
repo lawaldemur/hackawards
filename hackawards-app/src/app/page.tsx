@@ -1,9 +1,13 @@
-import Link from "next/link";
+import React from 'react';
+import MintNFTForm from 'src/app/_components/MintNFTForm';
 
-export default function HomePage() {
+const HomePage: React.FC = () => {
   return (
-    <main>
-      <h1>Hackawards</h1>
-    </main>
+    <div>
+      <h1>Welcome to the NFT Minting App</h1>
+      <MintNFTForm />
+    </div>
   );
-}
+};
+
+export default HomePage;
