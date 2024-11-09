@@ -13,6 +13,7 @@ import {
     Identity,
   } from '@coinbase/onchainkit/identity';
 
+  import { base } from 'wagmi/chains';
 export default function Hero() {
     return (
         <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
@@ -21,16 +22,18 @@ export default function Hero() {
             </h1>
             <p className="text-2xl">
                 Get rewarded with NTF for your hackathon
+                
             </p>
             <Wallet>
         <ConnectWallet>
-          <Avatar className="h-6 w-6" />
-          <Name />
+          <Avatar className="h-6 w-6" chain={base}/>
+          <Name chain={base}/>
         </ConnectWallet>
         <WalletDropdown>
-          <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick>
-            <Avatar />
-            <Name />
+          <Identity className="px-4 pt-3 pb-2" hasCopyAddressOnClick chain={base}>
+            <Avatar chain={base}/>
+            <Name chain={base} />
+            
             <Address />
           </Identity>
           <WalletDropdownDisconnect />

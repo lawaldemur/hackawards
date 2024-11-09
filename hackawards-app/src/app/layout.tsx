@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 import '@coinbase/onchainkit/styles.css'; 
 
 import { type Metadata } from "next";
-import { headers } from 'next/headers';
 import { type ReactNode } from 'react';
 import { cookieToInitialState } from 'wagmi';
 import { getConfig } from '../wagmi';
