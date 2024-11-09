@@ -1,9 +1,11 @@
-import Link from "next/link";
+import Hero from "./_components/hero";
+
 
 export default function HomePage() {
   return (
     <main>
-      <h1>Hackawards</h1>
+      <Hero />
+      
     </main>
   );
 }
