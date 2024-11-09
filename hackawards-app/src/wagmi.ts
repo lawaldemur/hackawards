@@ -7,8 +7,8 @@ export function getConfig() {
     chains: [base], // add baseSepolia for testing
     connectors: [
       coinbaseWallet({
-        appName: "OnchainKit",
-        preference: 'smartWalletOnly',
+        appName: "HackAwards",
+        preference: 'all',
         version: '4',
       }),
     ],
