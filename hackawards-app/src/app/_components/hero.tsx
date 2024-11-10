@@ -83,12 +83,25 @@ export default function Hero() {
             </p>
           </div>
         )}
-       <div className="text"> {tokens?.map((token) => (
-          <div key={token.identifier}>
-            <p>{token.identifier}</p>
-            <p>{token.name}</p>
-            <img src={token.image_url} alt="1" />
-            </div>))} </div>
+        <div>
+            <h2 className="text-3xl font-bold self-start">Your NFTs</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6"> 
+          {tokens?.map((token) => (
+            <div key={token.identifier} className="bg-white/10 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 p-4">
+              <div className="aspect-square overflow-hidden rounded-lg">
+                <img 
+                  src={token.image_url} 
+                  alt={token.name} 
+                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+                />
+              </div>
+              <div className="mt-4 space-y-2">
+                <p className="text-lg font-semibold truncate">{token.name}</p>
+                <p className="text-sm text-gray-400">NFT ID#{token.identifier}</p>
+              </div>
+            </div>
+          ))}
+            </div>
         </div>
-    );
+      </div>    );
     }
