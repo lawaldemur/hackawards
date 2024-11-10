@@ -1,95 +1,95 @@
+// components/MintNFTForm.tsx
 'use client';
+
 import React, { useState } from 'react';
 
 const MintNFTForm: React.FC = () => {
-  const [formData, setFormData] = useState({
-    data: '',
-    description: '',
-    name: '',
-  });
+  const [imageUrl, setImageUrl] = useState('');
+  const [recipientAddress, setRecipientAddress] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [responseMessage, setResponseMessage] = useState('');
 
-  const [responseMessage, setResponseMessage] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleMint = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    setResponseMessage(null);
+    setLoading(true);
+    setResponseMessage('');
 
     try {
-      const response = await fetch('/api/mintNFT', {
+      const res = await fetch('/api/mintNFT', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          imageUrl,
+          recipientAddress,
+          name,
+          description,
+        }),
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Something went wrong');
-      }
+      const data = await res.json();
 
-      const result = await response.json();
-      setResponseMessage('NFT minted successfully!');
-      console.log('Minting Result:', result);
-    } catch (error: any) {
-      setResponseMessage(`Error: ${error.message}`);
-      console.error('Error submitting form:', error);
+      if (res.ok) {
+        setResponseMessage('NFT minted successfully!');
+      } else {
+        setResponseMessage(`Error: ${data.error || 'Failed to mint NFT.'}`);
+      }
+    } catch (error) {
+      console.error('Minting Error:', error);
+      setResponseMessage('An error occurred while minting the NFT.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="mint-nft-form">
       <h2>Mint a New NFT</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleMint}>
         <div>
-          <label htmlFor="data">Data:</label>
+          <label htmlFor="imageUrl">Image URL:</label>
           <input
-            type="text"
-            id="data"
-            name="data"
-            value={formData.data}
-            onChange={handleChange}
+            type="url"
+            id="imageUrl"
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
             required
           />
         </div>
         <div>
-          <label htmlFor="description">Description:</label>
+          <label htmlFor="recipientAddress">Recipient Address:</label>
           <input
             type="text"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
+            id="recipientAddress"
+            value={recipientAddress}
+            onChange={(e) => setRecipientAddress(e.target.value)}
             required
           />
         </div>
         <div>
-          <label htmlFor="name">Name:</label>
+          <label htmlFor="name">NFT Name:</label>
           <input
             type="text"
             id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Minting...' : 'Mint NFT'}
+        <div>
+          <label htmlFor="description">NFT Description:</label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit" disabled={loading}>
+          {loading ? 'Minting...' : 'Mint NFT'}
         </button>
       </form>
       {responseMessage && <p>{responseMessage}</p>}
