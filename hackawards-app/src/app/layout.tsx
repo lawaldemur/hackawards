@@ -19,7 +19,7 @@ export default function RootLayout(props: { children: ReactNode }) {
   );
   return (
     <html lang="en">
-      <body>
+      <body className="bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 to-purple-500">
         <Providers initialState={initialState}>{props.children}</Providers>
       </body>
     </html>
