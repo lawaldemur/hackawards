@@ -15,15 +15,47 @@ import {
 
   import { base } from 'wagmi/chains';
   import { useAccount } from 'wagmi';
-  
-export default function Hero() {
+import { useEffect, useState } from 'react';
+    
 
+export default function Hero() {
+    const [tokens, setTokens] = useState([]);
     const account = useAccount()
 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const requestHeaders: HeadersInit = {
+                Accept: "application/json",
+                
+              };
+        
+              const requestOptions: RequestInit = {
+                method: "GET",
+                headers: requestHeaders,
+              };
+          try {
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            const response = await fetch(
+              `https://testnets-api.opensea.io/api/v2/chain/base_sepolia/account/${account?.address}/nfts`,
+              requestOptions
+            );
+            const assets  = await response.json();
+            setTokens(assets.nfts);
+          } catch (err) {
+            console.log(`Error fetching assets from Opensea: ${err}`);
+            return new Error(`Error fetching assets from Opensea: ${err}`);
+          }
+          
+        };
+        
+        fetchData();
+      }, [account?.address]);
+    
     return (
         <div className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
             <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
-                HackAwards
+                HackAwards 
             </h1>
             <p className="text-2xl">
                 Get rewarded with NTF for your hackathon achievements
@@ -47,10 +79,16 @@ export default function Hero() {
         {account.isConnected && (
           <div className="flex flex-col items-center justify-center gap-4">
             <p className="text-2xl">
-              Connected to {account.address}
+              Connected to {account.address} on { account.connector?.name}
             </p>
           </div>
         )}
+       <div className="text"> {tokens?.map((token) => (
+          <div key={token.identifier}>
+            <p>{token.identifier}</p>
+            <p>{token.name}</p>
+            <img src={token.image_url} alt="1" />
+            </div>))} </div>
         </div>
     );
     }
