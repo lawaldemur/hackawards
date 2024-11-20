@@ -10,7 +10,7 @@ export default async function generateBadge({
 }) {
   const openai = new OpenAI({
     dangerouslyAllowBrowser: true,
-    apiKey: "OPENAI_API_KEY",
+    apiKey: env.NEXT_PUBLIC_OPENAI_API_KEY,
   });
   const response = await openai.images.generate({
     model: "dall-e-3",
