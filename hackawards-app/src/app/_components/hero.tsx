@@ -85,9 +85,8 @@ export default function Hero() {
         )}
         <div>
             <h2 className="text-3xl font-bold self-start">Your NFTs</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6"> 
-          {tokens?.map((token) => (
-            <div key={token.identifier} className="bg-white/10 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 p-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-6 p-6"> 
+          {tokens?.slice(0,3).map((token) => (            <div key={token.identifier} className="bg-white/10 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 p-4">
               <div className="aspect-square overflow-hidden rounded-lg">
                 <img 
                   src={token.image_url} 

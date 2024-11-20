@@ -1,7 +1,6 @@
 
-import dotenv from 'dotenv';
+import { env } from "~/env";
 
-dotenv.config({ path: '~/.env' });
   export async function mintNFT({imageUrl}: {imageUrl: string}) {
     
     const formData = new FormData();
@@ -10,13 +9,14 @@ dotenv.config({ path: '~/.env' });
     formData.append('imageUrl', imageUrl);
     formData.append('recipientAddress', '0x2CE24f80C52147C219E98808A4Fd0b303793745c');
     formData.append('description', 'Hello');
-    formData.append('name', 'Name is good');
+    formData.append('name', 'Name is bad');
     const url = 'https://api.verbwire.com/v1/nft/mint/quickMintFromMetadata';
+    const verbwireApiKey = env.NEXT_PUBLIC_VERBWIRE_KEY;
     const response = await fetch(url, {
       method: 'POST',
       headers: {
         accept: 'application/json',
-        'X-API-Key': process.env.NEXT_PUBLIC_VERBWIRE_KEY as string,
+        'X-API-Key': verbwireApiKey as string,
       },
       body: formData,
     });

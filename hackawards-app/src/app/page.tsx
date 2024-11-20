@@ -1,13 +1,17 @@
+import BadgeSection from "./_components/badgeSection";
 import HackathonsList from "./_components/hackathons_list";
 import Hero from "./_components/hero";
-import MintHelper from "./_components/mintHelper";
+import MintButton from "./_components/mintButton";
 
 
 export default function HomePage() {
   return (
     <main>
-      <MintHelper />
+      
       <Hero />
+      <BadgeSection />
+      <MintButton />
+      
       <HackathonsList />
       
     </main>
